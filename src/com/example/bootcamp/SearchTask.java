@@ -1,15 +1,8 @@
 package com.example.bootcamp;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,9 +13,9 @@ import android.util.Log;
 public class SearchTask {
 
 	MainActivity display;
-	private static final String debug_tag = "Search";
+	
 	private static final String API_KEY = "6rzu8wc83rwn96h5hkndep27";
-	private static final int page_limit = 10;
+	private static final int page_limit = 6;
 	
 	public SearchTask(MainActivity activity) {
 		this.display = activity;
@@ -38,31 +31,17 @@ public class SearchTask {
 		new Search().execute(url);
 	}
 	
-	private class Search extends AsyncTask<String, Integer, ArrayList<ListData> >{
 	
+	private class Search extends AsyncTask<String, Integer, ArrayList<ListData> >{
+		private static final String debug_tag = "Search query";
 		@Override
 		protected ArrayList<ListData> doInBackground(String... arg0) {
 			String url = arg0[0];
 			ArrayList<ListData> newList = new ArrayList<ListData>();
 			try {
-				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet(url);
-				
-				//gets json string from response
-				HttpResponse response = client.execute(request);
-				HttpEntity entity = response.getEntity();
-				
+				HttpEntity entity = HelperClass.getEntityFromURL(url);
 				if (entity != null) {
-					InputStream is = entity.getContent();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-					StringBuilder builder = new StringBuilder();
-					String line = null;
-					while ((line = reader.readLine()) != null) {
-						builder.append(line + "\n");
-					}
-					
-					JSONObject result = new JSONObject(builder.toString());
-					
+					JSONObject result = HelperClass.getJSONFromEntity(entity);
 					JSONArray movies = result.getJSONArray("movies");
 					
 					//add the movies to the list
@@ -97,4 +76,6 @@ public class SearchTask {
 			display.setList(list);
 		}
 	}
+	
+
 }

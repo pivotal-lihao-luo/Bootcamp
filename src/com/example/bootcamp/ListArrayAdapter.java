@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListArrayAdapter extends ArrayAdapter<ListData> implements OnClickListener{
+public class ListArrayAdapter extends ArrayAdapter<ListData> implements UpdatableActivity {
 	private final Context context;
 	private final ArrayList<ListData> movieList;
 	
@@ -37,14 +36,15 @@ public class ListArrayAdapter extends ArrayAdapter<ListData> implements OnClickL
 		title.setText(curMovie.getTitle());
 		year.setText("(" + curMovie.getYear() + ")");
 		runtime.setText(curMovie.getRuntime() + " minutes");
-		rating.setText(curMovie.getRating() + "%");
+		if (curMovie.getRating() == -1)
+			rating.setText("N/A");
+		else
+			rating.setText(curMovie.getRating() + "%");
+		poster.setImageDrawable(GetImageTask.getInstance().getImage(curMovie.getUrl(), this));
 		return convertView;
 	}
-
-	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 	
+	public void updateImage() {
+		this.notifyDataSetChanged();
+	}
 }

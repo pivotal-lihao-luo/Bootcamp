@@ -1,12 +1,19 @@
 package com.example.bootcamp;
 
-public class ListData {
+import java.io.Serializable;
+
+public class ListData implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4363074930476902927L;
 	private int year;
 	private String title;
 	private String url;
 	private String id;
 	private int rating;
 	private int runtime;
+	public final static String NAME = "com.example.Bootcamp.ListData";
 	
 	public ListData(String id, int year, String title, String url, int rating, int runtime) {
 		this.id = id;

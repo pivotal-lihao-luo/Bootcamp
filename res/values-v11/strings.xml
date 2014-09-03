@@ -4,5 +4,6 @@
     <string name="app_name">Bootcamp</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="searchdialogtv">Search</string>
 
 </resources>
