@@ -47,4 +47,12 @@ public class ListData implements Serializable {
 	public int getRuntime() {
 		return runtime;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		ListData other = (ListData) o;
+		return other.getYear() == year && other.getTitle().equals(title) && other.getUrl().equals(url) && other.getId().equals(id) && other.getRating() == rating && other.getRuntime() == runtime; 
+	}
+	
+
 }

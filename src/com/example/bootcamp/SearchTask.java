@@ -27,6 +27,8 @@ public class SearchTask {
 	}
 	
 	public void execute(String query, int pageNum) {
+		if (query == null)
+			return;
 		String url = generateURL(query, pageNum);
 		new Search().execute(url);
 	}
